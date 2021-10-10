@@ -23,6 +23,12 @@ services:
     volumes:
       - /app/node_modules
       - ./backend:/app
+    environment:
+      MYSQL_HOST: $MYSQL_HOST
+      MYSQL_USER: $MYSQL_USER
+      MYSQL_ROOT_PASSWORD: $MYSQL_ROOT_PASSWORD
+      MYSQL_DATABASE: $MYSQL_DATABASE
+      MYSQL_PORT: $MYSQL_PORT
 
   # 개발환경에서 mysql을 도커 환경에 올리고 사용할 때 설정
   # 로컬의 mysql 폴더는 이미 동작하지 않아서 지워도 된다.

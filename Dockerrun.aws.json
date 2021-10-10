@@ -1,0 +1,31 @@
+{
+    "AWSEBDockerrunVersion": 2,
+    "containerDefinitions": [
+        {
+            "name": "frontend",
+            "image": "shinjs0505/docker-react-frontend",
+            "hostname": "frontend",
+            "essential": false,
+            "memory": 64
+        },
+        {
+            "name": "backend",
+            "image": "shinjs0505/docker-react-backend",
+            "hostname": "backend",
+            "essential": false,
+            "memory": 64
+        },
+        {
+            "name": "nginx",
+            "image": "shinjs0505/docker-react-nginx",
+            "hostname": "nginx",
+            "essential": true,
+            "portMappings": {
+                "hostPort": 80,
+                "containerPort": 80
+            },
+            "links": ["frontend","backend"],
+            "memory": 64
+        }
+    ]
+}
