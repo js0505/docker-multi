@@ -1,0 +1,26 @@
+language: generic
+
+sudo: required
+
+services:
+  - docker
+
+# 테스트 하기위한 부분. 나중에 백엔드도 필요하면 추가 빌드해서 테스트 진행.
+before_install:
+  - docker build -t shinjs0505/docker-react-multi -f ./frontend/Dockerfile.dev ./frontend
+# 테스트 진행 스크립트
+script:
+  - docker run -e CI=true shinjs0505/docker-react-multi npm run test
+
+# 위 테스트가 성공한 뒤의 진행
+after_success:
+  - docker build -t shinjs0505/docker-react-frontend ./frontend
+  - docker build -t shinjs0505/docker-react-backend ./backend
+  - docker build -t shinjs0505/docker-react-nginx ./nginx
+
+# 도커허브 로그인
+  - echo "$DOCKER_HUB_PASSWORD" | docker login -u "$DOCKER_HUB_ID" --password-stdin
+
+  - docker push shinjs0505/docker-react-frontend
+  - docker push shinjs0505/docker-react-backend
+  - docker push shinjs0505/docker-react-nginx
